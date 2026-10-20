@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TameemBlox | Gaming Marketplace</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b12;color:#fff;font-family:Arial,sans-serif}
+header{padding:20px;background:#171322;border-bottom:1px solid #352449}
+h1{margin:0;color:#c4a3ff}
+nav{display:flex;gap:10px;margin-top:18px}
+button{background:#8247e5;color:white;border:0;padding:12px 16px;border-radius:9px;font-weight:bold;cursor:pointer}
+nav button{flex:1}
+main{max-width:900px;margin:auto;padding:22px}
+.hero{padding:28px 0}
+.hero h2{font-size:32px;margin-bottom:8px}
+input,select{width:100%;padding:13px;border-radius:8px;border:1px solid #453652;background:#191724;color:white;margin:8px 0}
+.games,.items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:#191724;border:1px solid #382747;padding:18px;border-radius:14px}
+.art{font-size:38px;background:#30204c;text-align:center;padding:25px;border-radius:10px}
+.price{color:#c4a3ff;font-size:22px;font-weight:bold}
+.muted{color:#bbb4cb;font-size:14px}
+section{margin:25px 0}
+footer{text-align:center;padding:25px;color:#aaa}
+#sell{display:none}
+@media(min-width:650px){.items{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<h1>🎮 TameemBlox</h1>
+<div class="muted">YOUR GAMING MARKETPLACE</div>
+<nav>
+<button onclick="showPage('shop')">Marketplace</button>
+<button onclick="showPage('sell')">Become a seller</button>
+</nav>
+</header>
+<main>
+<div id="shop">
+<div class="hero">
+<h2>Level up your game.</h2>
+<p class="muted">Discover gaming items from the community.</p>
+<input id="search" placeholder="Search gaming items..." oninput="render()">
+</div>
+<section>
+<h3>Browse games</h3>
+<div class="games">
+<button onclick="filter('All')">All games</button>
+<button onclick="filter('Roblox')">Roblox</button>
+<button onclick="filter('Minecraft')">Minecraft</button>
+<button onclick="filter('Fortnite')">Fortnite</button>
+</div>
+</section>
+<section>
+<h3>Featured listings</h3>
+<div class="items" id="items"></div>
+</section>
+<section class="card">
+<h3>🛡️ Buyer protection</h3>
+<p class="muted">Our goal is safer trading with verified sellers, traceable orders and dispute support. Real purchases are not enabled yet.</p>
+</section>
+</div>
+<div id="sell">
+<h2>Become a seller</h2>
+<p class="muted">Start preparing your seller profile.</p>
+<form onsubmit="event.preventDefault();document.getElementById('notice').textContent='Demo only: registration is not connected yet. No account was created.'">
+<label>Shop name</label>
+<input required placeholder="Your shop name">
+<label>Email</label>
+<input type="email" required placeholder="you@example.com">
+<label>What do you sell?</label>
+<select><option>Roblox items</option><option>Minecraft items</option><option>Fortnite items</option><option>Other game items</option></select>
+<button type="submit">Preview registration</button>
+<p id="notice" class="muted"></p>
+</form>
+</div>
+</main>
+<footer>© 2026 TameemBlox · Marketplace preview</footer>
+<script>
+const products=[
+{name:"Mystery Pet Bundle",game:"Roblox",price:"$5.00",art:"🐾"},
+{name:"Rare Item Bundle",game:"Roblox",price:"$8.00",art:"💎"},
+{name:"Minecraft Starter Pack",game:"Minecraft",price:"$3.00",art:"⛏️"},
+{name:"Gaming Bundle",game:"Fortnite",price:"$6.00",art:"⚡"}
+];
+let current="All";
+function filter(g){current=g;render()}
+function render(){
+const q=document.getElementById("search").value.toLowerCase();
+document.getElementById("items").innerHTML=products.filter(p=>(current==="All"||p.game===current)&&(p.name+" "+p.game).toLowerCase().includes(q)).map(p=>`<article class="card"><div class="art">${p.art}</div><h3>${p.name}</h3><p class="muted">${p.game} · Sample listing</p><p class="price">${p.price}</p><button onclick="alert('Demo only: checkout is not available yet.')">View item</button></article>`).join("");
+}
+function showPage(p){document.getElementById("shop").style.display=p==="shop"?"block":"none";document.getElementById("sell").style.display=p==="sell"?"block":"none"}
+render();
+</script>
+</body>
+</html>
